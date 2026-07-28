@@ -36,7 +36,7 @@ Users can filter destinations by continent, budget, and climate, then receive a 
 * Local Storage
 
 ## Project Structure
-
+```text
 random-travel-picker/
 │
 ├── app.py
@@ -52,7 +52,7 @@ random-travel-picker/
 │   └── images/
 └── templates/
     └── index.html
-
+```
 ## Getting Started
 
 Clone the repository
@@ -89,9 +89,9 @@ Open in your browser
 ```
 http://127.0.0.1:5000
 ```
-Roadmap
+## Roadmap
 
-## Planned improvements include:
+Planned improvements include:
 
 * Interactive map
 * AI-powered destination recommendations
