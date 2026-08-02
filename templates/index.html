@@ -28,7 +28,9 @@
             </p>
 
             <a href="#filters" class="scroll-down">
-                ↓
+                <img
+                    src="{{ url_for('static', filename='images/pixel-arrow.png') }}"
+                    alt="Scroll down">
             </a>
 
         </div>
@@ -121,9 +123,21 @@
 
             <div class="destination-info">
 
-                <h2 id="city-country">
-                    Tokyo, Japan
-                </h2>
+                <div class="destination-header">
+
+                    <h2 id="city-country">
+                        Tokyo, Japan
+                    </h2>
+
+                    <button id="favorite-btn" aria-label="Add to favorites">
+
+                        <img
+                            src="{{ url_for('static', filename='images/pixel-heart.svg') }}"
+                            alt="Favorite">
+
+                    </button>
+
+                </div>
 
                 <p>
                     <strong>Best Time to Visit:</strong>
@@ -167,9 +181,7 @@
                 <img
                     id="destination-photo"
                     src="{{ url_for('static', filename='images/Tokyo.avif') }}"
-                    alt="Tokyo"
-                    width="400"
-                    height="300">
+                    alt="Tokyo">
 
             </div>
 
@@ -235,29 +247,31 @@
 
         </section>
 
-        <!-- ========== FAVORITES ========== -->
-
-        <section class="favorites">
-
-            <h2>Favorites</h2>
-
-            <div id="favorites-container">
-
-                <!-- JavaScript -->
-
-            </div>
-
-        </section>
-
     </main>
+
+    <!-- ========== FAVORITES ========== -->
+
+    <section id="favorites" class="favorites hidden">
+
+    <h2>Favorites</h2>
+
+    <div id="favorites-container">
+
+        <!-- JavaScript -->
+
+    </div>
+
+    </section>
 
     <!-- ========== FOOTER ========== -->
 
-    <footer>
+    <footer class="footer">
 
-        <h2>Random Travel Picker</h2>
+    <h2>Random Travel Picker</h2>
 
-        <p>© 2026 Uliana Melnyk</p>
+    <p>Designed & developed by Uliana Melnyk</p>
+
+    <p>&copy; 2026 All rights reserved.</p>
 
     </footer>
 
