@@ -1,0 +1,144 @@
+/* ========== Google Font ========== */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+
+/* ========== Variables ========== */
+
+:root {
+    --primary-color: #0a7cb8;
+    --secondary-color: #d7f4ff;
+    --white: #ffffff;
+    --text-dark: #244056;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    --radius: 25px;
+}
+
+
+/* ========== Global Styles ========== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    line-height: 1.6;
+}
+
+
+/* ========== Hero Section ========== */
+
+.hero {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 80px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.30),
+            rgba(0,0,0,.30)
+        ),
+        url("../images/plane.avif");
+
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+}
+
+.hero-content {
+    max-width: 520px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-text {
+    font-size: 1.3rem;
+    margin-bottom: 35px;
+}
+
+.scroll-down {
+    color: white;
+    text-decoration: none;
+    font-size: 4rem;
+    transition: transform .3s ease;
+}
+
+.scroll-down:hover {
+    transform: translateY(8px);
+}
+
+button {
+    padding:16px 36px;
+    border:none;
+    border-radius:30px;
+    background:var(--primary-color);
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover {
+    transform:translateY(-3px);
+    box-shadow:var(--shadow);
+}
+
+/* ========== Filters ========== */
+
+.filters-section {
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.filters-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 45px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 45px;
+}
+
+select {
+    width: 190px;
+    padding: 14px 18px;
+
+    border: 2px solid var(--primary-color);
+    border-radius: 30px;
+
+    background: white;
+    color: var(--primary-color);
+
+    cursor: pointer;
+    transition: .3s;
+}
+
+select:hover {
+    transform: translateY(-2px);
+}
+
+.destination-card {
+    display:none;
+}
+
+.hidden {
+    display:none;
+}
