@@ -289,6 +289,12 @@ const continent = document.getElementById("continent");
 const budget = document.getElementById("budget");
 const climate = document.getElementById("climate");
 
+// Button favorites
+const favoriteButton = document.getElementById("favorite-btn");
+
+let favorites = [];
+let currentDestination = null;
+
 findButton.addEventListener("click", function () {
 
     filters.classList.add("hidden");
@@ -348,6 +354,8 @@ findButton.addEventListener("click", function () {
     const randomDestination = matchingDestinations[randomIndex];
     console.log(randomDestination);
 
+    currentDestination = randomDestination;
+
     setTimeout(function () {
 
         loading.classList.add("hidden");
@@ -371,3 +379,18 @@ findButton.addEventListener("click", function () {
 
 });
 
+// Button Favorites
+
+favoriteButton.addEventListener("click", function () {
+
+    if (currentDestination === null) {
+        return;
+    }
+
+    if (!favorites.includes(currentDestination)) {
+    favorites.push(currentDestination);
+}
+
+    console.log(favorites);
+
+});
