@@ -297,6 +297,19 @@ let favorites =
 
 let currentDestination = null;
 
+const favoritesSection =
+    document.getElementById("favorites");
+
+const favoritesList =
+    document.getElementById("favorites-list");
+
+if (favorites.length > 0) {
+
+    favoritesSection.classList.remove("hidden");
+    renderFavorites();
+
+}
+
 findButton.addEventListener("click", function () {
 
     filters.classList.add("hidden");
@@ -389,9 +402,17 @@ favoriteButton.addEventListener("click", function () {
         return;
     }
 
-    if (!favorites.includes(currentDestination)) {
+    const alreadySaved = favorites.some(function(place) {
+        return place.city === currentDestination.city;
+    });
+
+    if (!alreadySaved) {
 
         favorites.push(currentDestination);
+
+        favoritesSection.classList.remove("hidden");
+
+        renderFavorites();
 
         localStorage.setItem(
             "favorites",
@@ -400,5 +421,38 @@ favoriteButton.addEventListener("click", function () {
 
         console.log(favorites);
     }
+
+});
+
+function renderFavorites() {
+
+    favoritesList.innerHTML = "";
+
+    favorites.forEach(function(place) {
+
+        const listItem = document.createElement("li");
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "x";
+
+        listItem.textContent =
+            `${place.city}, ${place.country}`;
+
+        listItem.appendChild(removeButton);
+
+        favoritesList.appendChild(listItem);
+
+    });
+
+}
+
+// Button Try Another Destination
+
+const tryAgainButton =
+    document.getElementById("try-again");
+
+tryAgainButton.addEventListener("click", function () {
+
+    findButton.click();
 
 });
