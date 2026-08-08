@@ -292,7 +292,9 @@ const climate = document.getElementById("climate");
 // Button favorites
 const favoriteButton = document.getElementById("favorite-btn");
 
-let favorites = [];
+let favorites =
+    JSON.parse(localStorage.getItem("favorites")) || [];
+
 let currentDestination = null;
 
 findButton.addEventListener("click", function () {
@@ -388,9 +390,15 @@ favoriteButton.addEventListener("click", function () {
     }
 
     if (!favorites.includes(currentDestination)) {
-    favorites.push(currentDestination);
-}
 
-    console.log(favorites);
+        favorites.push(currentDestination);
+
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+
+        console.log(favorites);
+    }
 
 });
