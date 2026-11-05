@@ -57,7 +57,7 @@ random-travel-picker/
 
 Clone the repository
 ```
-git clone https://github.com/YOUR_USERNAME/random-travel-picker.git
+https://github.com/ulamelnyk/random-travel-picker.git
 ```
 Navigate to the project directory
 ```
@@ -89,14 +89,3 @@ Open in your browser
 ```
 http://127.0.0.1:5000
 ```
-## Roadmap
-
-Planned improvements include:
-
-* Interactive map
-* AI-powered destination recommendations
-* User accounts
-* Travel history
-* Additional destinations and filters
-* Mobile support
-* Dark mode
