@@ -224,6 +224,38 @@ select:focus {
     margin-bottom: 20px;
 }
 
+/* ========== Favorite Button ========== */
+
+#favorite-btn {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#favorite-btn:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+#favorite-btn img {
+    width: 32px;
+    height: 32px;
+
+    object-fit: contain;
+
+    transition: transform 0.2s ease;
+}
+
+#favorite-btn img:hover {
+    transform: scale(1.15);
+}
+
 /* ========== Top Attractions ========== */
 
 .attractions {
@@ -258,28 +290,46 @@ select:focus {
 
 /* ========== Favorites ========== */
 
-#favorite-btn {
-    background: none;
-    border: none;
-    box-shadow: none;
-    padding: 0;
+.favorites {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
 
+.favorites h2 {
+    font-size: 2.3rem;
+    margin-bottom: 30px;
+}
+
+#favorites-list {
+    list-style: none;
+}
+
+#favorites-list li {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 20px;
 
-    cursor: pointer;
+    margin-bottom: 20px;
+
+    font-size: 1.4rem;
 }
 
-#favorite-btn img {
-    width: 34px;
-    height: auto;
+#favorites-list button {
+    width: 36px;
+    height: 36px;
 
-    transition: transform .3s ease;
+    padding: 0;
+
+    background: transparent;
+    box-shadow: none;
 }
 
-#favorite-btn:hover img {
-    transform: scale(1.1);
+#favorites-list button img {
+    width: 18px;
+    height: 18px;
+
+    display: block;
 }
 
 /* ========== Footer ========== */
