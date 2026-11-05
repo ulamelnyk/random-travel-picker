@@ -146,7 +146,7 @@ const destinations = [
         budget: 260,
         bestTime: "April – June",
         description: "New York City is home to world-famous landmarks, Broadway shows, museums, and diverse neighborhoods.",
-        image: "new-york.avif",
+        image: "nyc.avif",
         attractions: [
             "Statue of Liberty",
             "Central Park",
@@ -435,6 +435,8 @@ const climate = document.getElementById("climate");
 
 const attractionsGrid = document.getElementById("attractions-grid");
 
+const favoriteHeart = document.querySelector("#favorite-btn img");
+
 // Button favorites
 const favoriteButton = document.getElementById("favorite-btn");
 
@@ -460,6 +462,8 @@ findButton.addEventListener("click", function () {
 
     filters.classList.add("hidden");
     loading.classList.remove("hidden");
+    destination.classList.add("hidden");
+    attractions.classList.add("hidden");
 
     const selectedContinent = continent.value;
     const selectedBudget = budget.value;
@@ -506,10 +510,26 @@ findButton.addEventListener("click", function () {
 
     console.log(matchingDestinations);
 
-    if (matchingDestinations.length === 0) {
-        alert("No destinations match your filters.");
-        return;
-    }
+
+if (matchingDestinations.length === 0) {
+
+    loading.classList.add("hidden");
+
+    filters.classList.remove("hidden");
+
+    destination.classList.add("hidden");
+    attractions.classList.add("hidden");
+
+    filters.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    alert("No destinations match your filters. Please try different options.");
+
+    return;
+}
+
     const randomIndex = Math.floor(Math.random() * matchingDestinations.length);
 
     const randomDestination = matchingDestinations[randomIndex];
@@ -570,6 +590,30 @@ favoriteButton.addEventListener("click", function () {
 
     if (!alreadySaved) {
 
+    favorites.push(currentDestination);
+
+    favoritesSection.classList.remove("hidden");
+
+    renderFavorites();
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+
+favoriteButton.addEventListener("click", function () {
+
+    if (currentDestination === null) {
+        return;
+    }
+
+    const alreadySaved = favorites.some(function(place) {
+        return place.city === currentDestination.city;
+    });
+
+    if (!alreadySaved) {
+
         favorites.push(currentDestination);
 
         favoritesSection.classList.remove("hidden");
@@ -581,8 +625,12 @@ favoriteButton.addEventListener("click", function () {
             JSON.stringify(favorites)
         );
 
-        console.log(favorites);
     }
+
+});
+
+
+}
 
 });
 
@@ -595,7 +643,25 @@ function renderFavorites() {
         const listItem = document.createElement("li");
 
         const removeButton = document.createElement("button");
-        removeButton.textContent = "x";
+
+        removeButton.addEventListener("click", function () {
+
+        favorites = favorites.filter(function(item) {
+            return item.city !== place.city;
+        });
+
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+
+        renderFavorites();
+
+    });
+
+        removeButton.innerHTML = `
+    <img src="/static/images/cross.png" alt="Remove">
+`;
 
         listItem.textContent =
             `${place.city}, ${place.country}`;
