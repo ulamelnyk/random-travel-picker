@@ -435,252 +435,178 @@ const climate = document.getElementById("climate");
 
 const attractionsGrid = document.getElementById("attractions-grid");
 
-const favoriteHeart = document.querySelector("#favorite-btn img");
-
-// Button favorites
 const favoriteButton = document.getElementById("favorite-btn");
+const favoritesSection = document.getElementById("favorites");
+const favoritesList = document.getElementById("favorites-list");
+const tryAgainButton = document.getElementById("try-again");
 
-let favorites =
-    JSON.parse(localStorage.getItem("favorites")) || [];
-
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 let currentDestination = null;
 
-const favoritesSection =
-    document.getElementById("favorites");
-
-const favoritesList =
-    document.getElementById("favorites-list");
-
-if (favorites.length > 0) {
-
-    favoritesSection.classList.remove("hidden");
-    renderFavorites();
-
-}
+renderFavorites();
 
 findButton.addEventListener("click", function () {
-
     filters.classList.add("hidden");
-    loading.classList.remove("hidden");
     destination.classList.add("hidden");
     attractions.classList.add("hidden");
+    loading.classList.remove("hidden");
 
     const selectedContinent = continent.value;
     const selectedBudget = budget.value;
     const selectedClimate = climate.value;
 
-    console.log(selectedContinent);
-    console.log(selectedBudget);
-    console.log(selectedClimate);
-
     const matchingDestinations = destinations.filter(function (place) {
-
         let budgetMatches = false;
 
         if (selectedBudget === "any") {
             budgetMatches = true;
-        }
-        else if (selectedBudget === "Under $100/day") {
+        } else if (selectedBudget === "Under $100/day") {
             budgetMatches = place.budget < 100;
-        }
-        else if (selectedBudget === "$100–150/day") {
+        } else if (selectedBudget === "$100–150/day") {
             budgetMatches = place.budget >= 100 && place.budget <= 150;
-        }
-        else if (selectedBudget === "Over $150/day") {
+        } else if (selectedBudget === "Over $150/day") {
             budgetMatches = place.budget > 150;
         }
 
         return (
-
             (selectedContinent === "any" ||
-            place.continent === selectedContinent)
-
-            &&
-
+                place.continent === selectedContinent) &&
             (selectedClimate === "any" ||
-            place.climate === selectedClimate)
-
-            &&
-
+                place.climate === selectedClimate) &&
             budgetMatches
-
         );
-
     });
 
-    console.log(matchingDestinations);
+    if (matchingDestinations.length === 0) {
+        loading.classList.add("hidden");
+        filters.classList.remove("hidden");
+        alert("No destinations match your filters.");
+        return;
+    }
 
+    const randomIndex = Math.floor(
+        Math.random() * matchingDestinations.length
+    );
 
-if (matchingDestinations.length === 0) {
-
-    loading.classList.add("hidden");
-
-    filters.classList.remove("hidden");
-
-    destination.classList.add("hidden");
-    attractions.classList.add("hidden");
-
-    filters.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-
-    alert("No destinations match your filters. Please try different options.");
-
-    return;
-}
-
-    const randomIndex = Math.floor(Math.random() * matchingDestinations.length);
-
-    const randomDestination = matchingDestinations[randomIndex];
-    console.log(randomDestination);
-
-    currentDestination = randomDestination;
+    currentDestination = matchingDestinations[randomIndex];
 
     setTimeout(function () {
-
         loading.classList.add("hidden");
 
         cityCountry.textContent =
-            `${randomDestination.city}, ${randomDestination.country}`;
+            `${currentDestination.city}, ${currentDestination.country}`;
 
-        bestTime.textContent = randomDestination.bestTime;
-        continentName.textContent = randomDestination.continent;
-        climateName.textContent = randomDestination.climate;
-        budgetPrice.textContent = `$${randomDestination.budget}/day`;
-        description.textContent = randomDestination.description;
+        bestTime.textContent = currentDestination.bestTime;
+        continentName.textContent = currentDestination.continent;
+        climateName.textContent = currentDestination.climate;
+        budgetPrice.textContent = `$${currentDestination.budget}/day`;
+        description.textContent = currentDestination.description;
+
+        destinationPhoto.src =
+            "/static/images/" + currentDestination.image;
+
+        destinationPhoto.alt =
+            `Photo of ${currentDestination.city}`;
 
         attractionsGrid.innerHTML = "";
 
-        randomDestination.attractions.forEach(function(attraction) {
-
+        currentDestination.attractions.forEach(function (attraction) {
             const card = document.createElement("article");
-
             card.classList.add("attraction-card");
 
-            card.innerHTML = `
-                <h3>${attraction}</h3>
-            `;
+            const title = document.createElement("h3");
+            title.textContent = attraction;
 
+            card.appendChild(title);
             attractionsGrid.appendChild(card);
-
         });
 
-        destinationPhoto.src =
-            "/static/images/" + randomDestination.image;
+        updateFavoriteButton();
 
         destination.classList.remove("hidden");
         attractions.classList.remove("hidden");
-
-    }, 1000);
-
+    }, 700);
 });
 
-// Button Favorites
-
 favoriteButton.addEventListener("click", function () {
-
     if (currentDestination === null) {
         return;
     }
 
-    const alreadySaved = favorites.some(function(place) {
+    const alreadySaved = favorites.some(function (place) {
         return place.city === currentDestination.city;
     });
 
-    if (!alreadySaved) {
+    if (alreadySaved) {
+        alert("This destination is already in your favorites.");
+        return;
+    }
 
     favorites.push(currentDestination);
 
+    saveFavorites();
+    renderFavorites();
+    updateFavoriteButton();
+});
+
+function renderFavorites() {
+    favoritesList.innerHTML = "";
+
+    if (favorites.length === 0) {
+        favoritesSection.classList.add("hidden");
+        return;
+    }
+
     favoritesSection.classList.remove("hidden");
 
-    renderFavorites();
+    favorites.forEach(function (place) {
+        const listItem = document.createElement("li");
 
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-    );
+        const placeName = document.createElement("span");
+        placeName.textContent = `${place.city}, ${place.country}`;
 
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.setAttribute(
+            "aria-label",
+            `Remove ${place.city} from favorites`
+        );
 
-favoriteButton.addEventListener("click", function () {
+        removeButton.addEventListener("click", function () {
+            favorites = favorites.filter(function (favorite) {
+                return favorite.city !== place.city;
+            });
 
+            saveFavorites();
+            renderFavorites();
+            updateFavoriteButton();
+        });
+
+        listItem.appendChild(placeName);
+        listItem.appendChild(removeButton);
+
+        favoritesList.appendChild(listItem);
+    });
+}
+
+function saveFavorites() {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+}
+
+function updateFavoriteButton() {
     if (currentDestination === null) {
         return;
     }
 
-    const alreadySaved = favorites.some(function(place) {
+    const alreadySaved = favorites.some(function (place) {
         return place.city === currentDestination.city;
     });
 
-    if (!alreadySaved) {
-
-        favorites.push(currentDestination);
-
-        favoritesSection.classList.remove("hidden");
-
-        renderFavorites();
-
-        localStorage.setItem(
-            "favorites",
-            JSON.stringify(favorites)
-        );
-
-    }
-
-});
-
-
+    favoriteButton.textContent = alreadySaved
+        ? "♥ Saved to Favorites"
+        : "♡ Add to Favorites";
 }
-
-});
-
-function renderFavorites() {
-
-    favoritesList.innerHTML = "";
-
-    favorites.forEach(function(place) {
-
-        const listItem = document.createElement("li");
-
-        const removeButton = document.createElement("button");
-
-        removeButton.addEventListener("click", function () {
-
-        favorites = favorites.filter(function(item) {
-            return item.city !== place.city;
-        });
-
-        localStorage.setItem(
-            "favorites",
-            JSON.stringify(favorites)
-        );
-
-        renderFavorites();
-
-    });
-
-        removeButton.innerHTML = `
-    <img src="/static/images/cross.png" alt="Remove">
-`;
-
-        listItem.textContent =
-            `${place.city}, ${place.country}`;
-
-        listItem.appendChild(removeButton);
-
-        favoritesList.appendChild(listItem);
-
-    });
-
-}
-
-// Button Try Another Destination
-
-const tryAgainButton =
-    document.getElementById("try-again");
 
 tryAgainButton.addEventListener("click", function () {
-
     findButton.click();
-
 });
