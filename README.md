@@ -1,91 +1,111 @@
 # Random Travel Picker
 
-A modern travel recommendation web application that helps users discover their next destination based on their preferences.
-
-Users can filter destinations by continent, budget, and climate, then receive a randomly selected destination with useful travel information, including current weather, estimated travel costs, the best time to visit, and popular attractions.
+A web application that helps users discover their next travel destination based on their preferences. Users can filter destinations by continent, budget, and climate, and receive a randomly selected destination with useful travel information.
 
 ## Features
 
-* Random destination generator
-* Filter destinations by continent, budget, and climate
-* Average hotel price
-* Estimated daily travel budget
-* Best time to visit
-* Top tourist attractions
-* Destination and attraction photos
-* Save favorite destinations
-* Modern user interface with smooth animations
+- **Random Destination Generator** - Discover a random travel destination.
+- **Destination Filters** - Filter destinations by continent, daily budget, and climate.
+- **Destination Information** - View country, continent, climate, estimated daily budget, description, and best time to visit.
+- **Popular Attractions** - Explore popular tourist attractions in each destination.
+- **Favorites** - Save favorite destinations and remove them from the favorites list.
+- **Local Storage** - Favorites remain saved after refreshing the page.
+- **Responsive Design** - Modern interface with a clean layout and interactive elements.
 
-## Tech Stack
+## Technologies
 
 ### Frontend
-
-* HTML5
-* CSS3
-* JavaScript
+- HTML5
+- CSS3
+- JavaScript
 
 ### Backend
+- Python
+- Flask
 
-* Python
-* Flask
-
-### APIs & Storage
-
-* REST APIs
-* JSON
-* Local Storage
+### Storage
+- Browser Local Storage
 
 ## Project Structure
+
 ```text
 random-travel-picker/
 │
 ├── app.py
 ├── requirements.txt
 ├── README.md
-├── data/
-│   └── budgets.json
+│
 ├── static/
 │   ├── css/
 │   │   └── style.css
+│   │
 │   ├── js/
 │   │   └── script.js
+│   │
 │   └── images/
+│
 └── templates/
     └── index.html
 ```
+
 ## Getting Started
 
-Clone the repository
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ulamelnyk/random-travel-picker.git
 ```
-https://github.com/ulamelnyk/random-travel-picker.git
-```
-Navigate to the project directory
-```
+
+### 2. Navigate to the project directory
+
+```bash
 cd random-travel-picker
 ```
-Create a virtual environment
-```
+
+### 3. Create a virtual environment
+
+```bash
 python -m venv venv
 ```
-Activate the virtual environment
 
-macOS / Linux
-```
+### 4. Activate the virtual environment
+
+**macOS / Linux**
+
+```bash
 source venv/bin/activate
 ```
-Windows
-```
+
+**Windows**
+
+```bash
 venv\Scripts\activate
 ```
-Install dependencies
-```
+
+### 5. Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
-Run the application
-```
+
+### 6. Run the application
+
+```bash
 python app.py
 ```
-Open in your browser
-```
+
+### 7. Open the application
+
+Visit:
+
 http://127.0.0.1:5000
-```
+
+## How It Works
+
+The application uses Flask to serve the web page.
+
+JavaScript handles destination filtering, random selection, displaying destination information, and managing favorites.
+
+Favorites are stored in the browser using Local Storage.
+
+Destination information is currently defined in the JavaScript file.
